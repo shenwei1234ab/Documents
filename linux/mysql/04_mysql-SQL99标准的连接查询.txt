@@ -1,0 +1,120 @@
+使用SQL99标准的连接查询（JOIN..ON..）
+	内连接
+		只返回满足连接条件的数据（两边都有的才显示）。
+select e.*, d.*
+from emp e
+inner join dept d
+on e.deptno=d.deptno
+		-- 也可以省略inner关键字。
+
+	select e.*, d.*
+	from emp e  inner join dept d
+	on e.deptno=d.deptno
+		
+	左外连接
+		左边有值才显示。
+select e.empno, e.ename, e.sal, d.dname
+from emp e
+left outer join dept d
+on e.deptno=d.deptno
+		-- 也可以省略outer关键字
+		
+
+	右外连接
+		右边边有值才显示。
+		select e.*, d.*
+		from emp e		
+		right outer join dept d
+		on e.deptno=d.deptno
+		-- 也可以省略outer关键字
+	
+	满外联接
+		任一边有值就会显示。
+		select e.*, d.*
+		from emp e
+		full outer join dept d		
+		on e.deptno=d.deptno
+		-- 也可以省略outer关键字
+	
+	交叉连接：
+		叉集，就是笛卡尔积
+		select e.*, d.*
+		from emp e
+		cross join dept d
+		-- 没有连接条件
+====================================================
+
+eg:查询员工信息,员工号,姓名,月薪,部门名称
+	select e.empno, e.ename, e.sal, d.dname
+	from emp e, dept d
+	where e.deptno=d.deptno
+
+	select e.empno, e.ename, e.sal, d.dname
+	from emp e inner join dept d  -- 逗号join
+ 	on e.deptno=d.deptno    -- where on
+
+//显示所有部门信息
+//显示各个部门的部门人数
+	select d.deptno 部门号, d.dname 部门名称,count(e.empno) 人数
+	from emp e, dept d
+	where e.deptno(+)=d.deptno
+	group by d.deptno, d.dname
+
+	select d.deptno 部门号, d.dname 部门名称,count(e.empno) 人数
+	from emp e right outer join dept d
+	on e.deptno=d.deptno
+	group by d.deptno, d.dname
+
+自连接: -- 查询员工信息 ,老板信息
+	显示:   ****的老板是****
+select e.ename , b.ename
+	from emp e, emp b 
+	where e.mgr=b.empno
+
+select concat ( concat(e.ename, '的老板是'), b.ename)
+	from emp e, emp b 
+	where e.mgr=b.empno
+
+
+select e.ename, ifnull(b.ename,'他自己')
+	from emp e left outer join emp b 
+	on e.mgr=b.empno
+
+
+select concat ( concat(e.ename, '的老板是'), ifnull(b.ename,'他自己'))
+	from emp e left outer join emp b 
+	on e.mgr=b.empno
++------------------------------------------------------------------------+
+| concat ( concat(e.ename, '的老板是'), ifnull(b.ename,'他自己'))        |
++------------------------------------------------------------------------+
+| SMITH的老板是FORD                                                      |
+| ALLEN的老板是BLAKE                                                     |
+| WARD的老板是BLAKE                                                      |
+| JONES的老板是KING                                                      |
+| MARTIN的老板是BLAKE                                                    |
+| BLAKE的老板是KING                                                      |
+| CLARK的老板是KING                                                      |
+| SCOTT的老板是JONES                                                     |
+| KING的老板是他自己                                                     |
+| TURNER的老板是BLAKE                                                    |
+| ADAMS的老板是SCOTT                                                     |
+| JAMES的老板是BLAKE                                                     |
+| FORD的老板是JONES                                                      |
+| MILLER的老板是CLARK                                                    |
++------------------------------------------------------------------------+
+
+
+aaaaddd    ccccbbbbbb
+aaaaddd    ccccbbbbbb
+aaaaddd    ccccbbbbbb
+aaaaddd    ccccbbbbbb
+
+方法:按住alt键以后,鼠标拖动,选中一个矩形区域
+	
+
+
+
+
+	
+
+				

@@ -1,0 +1,199 @@
+
+第一部分
+
+mysql产品的基础知识
+	mysql百科
+		瑞典MySQL AB公司开发，目前属于Oracle公司。
+		MySQL是一种关联数据库管理系统 由于其体积小、速度快、总体拥有成本低
+		MySQL软件采用了双授权政策（本词条“授权政策”），它分为社区版和商业版	
+		LDAP   
+
+mysql产品的版本
+	搜索关键字	MySQL各版本的区别
+	Community版本
+	Enterprise版本
+    		MySQL标准版    	
+    		MySQL企业版
+    		MySQL集群版
+
+	下载Community版本, 免费..... OK
+	Enterprise版本 30天试用期
+	http://www.mysql.com/
+
+
+mysql产品下载
+	版本细节
+		linux(32 64) win(32 64)  
+	下载演示
+	or the MySQL 5.7 Milestone Release   防翻墙   == 正则表达式  防火墙 、代理（正向代理、反向代） VPN  SSL
+									
+	for the MySQL 5.6 Generally Available (GA) Release
+
+MySQL Community Server 5.6.20 win版本 
+	GA 是指软件的通用版本，一般指正式发布的版本 (Generally Available (GA) Release)
+	mysql-essential-5.1.60-win32.msi 是精简版，如果只需要mysql服务，就选择此版本。
+	mysql-5.1.60-win32.msi 是完整版，包含安装程序和配置向导，有MySQL文档。       选择这个....
+	mysql-noinstall-5.1.60-win32.zip 是非安装的zip压缩包，没有自动安装程序和配置向导， 无安装向导
+	mysql-5.1.60.zip 是用于windows的Mysql源码压缩包
+
+linux版本
+	在http://www.mysql.com/downloads/网站上下载不了
+	在 www.oracle.com downloads 找mysql 注册用户, 选择操作系统平台和mysql版本 进行下载
+	
+======================================================================
+
+Community完全够用了。Enterprise收费的，有问题mysql官方可以支持。
+
+
+搜索关键字:	mysql Enterprise  Community 版本
+http://www.educity.cn/wenda/401793.html
+
+
+MySQL 分为Community Server 和 Enterprise Edition。 其中Community Server 可以直接从mysql 的官网
+
+　　MySQL 分为Community Server 和 Enterprise Edition。 其中Community Server 可以直接从mysql 的官网下载。
+	Enterprice Edition 只能从Oracle edelivery上下载，不过Edelivery 现在已经屏蔽了中国的IP，如果国内的用户一般不能
+	从edelivery上下载，出去才能下载。
+1.1 官方文档上有关MySQL安装文件类型说明：
+
+　　Linux supports anumber of different solutions for installing MySQL. The recommended method isto use one of the distributions from Oracle. If you choose this method, thereare three options available:
+
+　　（1）Installingfrom a generic binary package in .tar.gz format. See Section 2.2,“Installing MySQL from Generic Binaries on Unix/Linux” for moreinformation.
+
+　　（2）Extractingand compiling MySQL from a source distribution. For detailed instructions,see Section 2.9, “InstallingMySQL from Source”.
+
+　　（3）Installingusing a pre-compiled RPM package. For more information on using the RPMsolution, see Section 2.5.1,“Installing MySQL from RPM Packages on Linux”.
+
+　　--这里讲了3种方式来安装MySQL数据库，我这里用最简单的RPM 包来安装。
+
+　　As analternative, you can use the native package manager within your Linuxdistribution to automatically download and install MySQL for you. Nativepackage installations can take of the download and dependencies required to runMySQL, but the MySQL version will often be some way behind the currentlyavailable release. You will also normally be unable to install developmentalreleases, as these are not usually made available in the native repository. Formore information on using the native package installers, see Section 2.5.2,“Installing MySQL on Linux using Native Package Manager”.
+
+　　Note
+
+　　For many Linux installations,you will want to set up MySQL to be started automatically when your machinestarts. Many of the native package installations perform this operation foryou, but for source, binary and RPM solutions you may need to set this upseparately. The required script, mysql.server,can be found in the support-filesdirectory under the MySQL installationdirectory or in a MySQL source tree. You can install itas/etc/init.d/mysql for automatic MySQL startup and shutdown. See Section 2.10.1.2,“Starting and Stopping MySQL Automatically”.
+
+　　--这里要注意一个问题，就是设置MySQL的自启动。 如果使用native package来安装，会自动设置为自启动，如果使用其他的方式，如source，binary和RPM，就需要单独的来设置自启动。
+1.2 下载安装包
+
+　　我这里下载Community Server 版的，Enterprise Edition版的请到Oracle E-Delivery上下载。Enterprise Edition 有30天的试用期。
+
+　　Community Server下载地址：
+	=====>
+	MySQL Community Server--------mysql的社区版本，开源、免费
+	MySQL Enterprise Edition---------mysql企业版，非免费
+	MySQL Cluster-----------------------mysql集群版本，开源、免费
+
+
+===========================
+MySQL各个版本区别
+	http://www.admin10000.com/Document/62.html
+
+oracle 云储存服务上 https下载
+	https://edelivery.oracle.com/EPD/Search/handle_go
+
+
+第二部分 mysql的安装
+
+0 oracle官网上下载的mysql有以下几个rpm包
+	
+
+1 查询服务器上已经安装的mysql	
+	rpm -aq | grep mysql	
+	
+	
+		mysql-5.0.77-3.el5
+		mysql-server-5.0.77-3.el5
+		libdbi-dbd-mysql-0.8.1a-1.2.2
+		mysql-connector-odbc-3.51.26r1127-1.el5
+		mysql-5.0.77-3.el5
+		
+		---
+		qt-mysql-4.6.2-25.el6.x86_64
+		
+		mysql-connector-odbc-5.1.5r1144-7.el6.x86_64
+		mysql-bench-5.1.66-2.el6_3.x86_64
+		mysql-devel-5.1.66-2.el6_3.x86_64
+		libdbi-dbd-mysql-0.8.3-5.1.el6.x86_64
+		mysql-test-5.1.66-2.el6_3.x86_64
+		mysql-libs-5.1.66-2.el6_3.x86_64
+		mysql-5.1.66-2.el6_3.x86_64
+		mysql-connector-java-5.1.17-6.el6.noarch
+		mysql-server-5.1.66-2.el6_3.x86_64
+		
+2 卸载旧的版本
+		rpm -e mysql --nodeps --allmatches (不理会依赖关系，删除所有上一步查出来的相同的mysql)
+		
+		[root@localhost home]#  rpm -e mysql-connector-odbc-3.51.26r1127-1.el5 --nodeps --allmatches
+		[root@localhost home]#  rpm -e libdbi-dbd-mysql-0.8.1a-1.2.2 --nodeps --allmatches
+		[root@localhost home]#  rpm -e mysql-server-5.0.77-3.el5 --nodeps --allmatches
+		
+		[root@localhost home]# rpm -aq | grep mysql
+		[root@localhost home]# 
+	
+3 将老版本的几个文件手工删除
+		#rm -f /etc/my.cnf
+		#rm -rf /var/lib/mysql
+		#rm -rf/var/share/mysql
+		# rm -rf/usr/bin/mysql*
+
+4 上传mysql的安装包
+		MySQL-client-advanced-5.6.20-1.el6.x86_64.rpm
+		MySQL-devel-advanced-5.6.20-1.el6.x86_64.rpm
+		MySQL-server-advanced-5.6.20-1.el6.x86_64.rpm
+
+5 安装服务器和客户端
+		#rpm -ivh MySQL-server-advanced-5.6.****-1.el6.x86_64.rpm
+		
+			A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !
+			You will find that password in '/root/.mysql_secret'.
+			
+			You must change that password on your first connect,
+			no other statement but 'SET PASSWORD' will be accepted.
+			See the manual for the semantics of the 'password expired' flag.
+			
+			Also, the account for the anonymous user has been removed.
+			
+			In addition, you can run:
+			
+			  /usr/bin/mysql_secure_installation
+			
+			which will also give you the option of removing the test database.
+			This is strongly recommended for production servers.
+			
+			See the manual for more instructions.
+			
+			Please report any problems at http://bugs.mysql.com/
+			
+			The latest information about MySQL is available on the web at
+			
+			  http://www.mysql.com
+			
+			Support MySQL by buying support/licenses at http://shop.mysql.com
+			
+			New default config file was created as /usr/my.cnf and
+			will be used by default by the server when you start it.
+			You may edit this file to change server settings
+			
+		#rpm -ivh MySQL-client-advanced-5.6.****-1.el6.x86_64.rpm
+		说明:不安装mysql-client是不能使用mysql工具登陆到mysql数据库
+		
+6 oracle收购Mysql后,新版的mysql刚安装完mysql后不能直接输入mysql登录数据库,
+	而是设置了默认free password密码,默认密码放在了/root/.mysql_secret文件中,登陆后需要修改密码
+
+7 修改密码
+	(1)查看文件寻找密码
+		vi /root/.mysql_secret
+	(2)登陆Mysql
+			linux mysql 服务启动和关闭	
+				service mysql start 		service mysql stop
+				
+		登陆服务器
+			mysql -u root -p
+			mysql -uroot -p123456
+	(3)修改密码
+			mysql> set password=password('123456') ; 
+			
+			也可以使用脚本 /usr/bin/mysql_secure_installation进行交互式的修改mysql的root密码
+
+			
+		

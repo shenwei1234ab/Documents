@@ -1,0 +1,87 @@
+
+
+第一层因素:
+	mysql的自身的设置
+	mysql有六处使用了字符集，分别为：client 、connection、database、results、server 、system。
+	mysql> show variables like 'character%';
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8                       |
+| character_set_connection | utf8                       |
+| character_set_database   | utf8                       |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8                       |
+| character_set_server     | latin1                     |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+
+	
+	
+mysql -uroot -p --default_character_set=gbk; (影响数据的输入和输出)
+	
+mysql> show variables like 'character%';
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | gbk                        |
+| character_set_connection | gbk                        |
+| character_set_database   | utf8                       |
+| character_set_filesystem | binary                     |
+| character_set_results    | gbk                        |
+| character_set_server     | latin1                     |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+8 rows in set (0.00 sec)
+
+	insert into worker(id,name,sex,birthday,salary,entry_date,resume) values(3,'赵六',0,'1985-09-21',7000,'2012-08-24','一个小小牛');
+	
+====>错误现象	
+	mysql> insert into worker(id,name,sex,birthday,salary,entry_date,resume) values(3,'赵六',0,'1985-09-21',7000,'2012-08-24','一个小小牛');
+ERROR 1366 (HY000): Incorrect string value: '\x80\xE4\xB8\xAA\xE5\xB0...' for column 'resume' at row 1
+mysql> 
+
+====>结论: 让你的客户端 服务器 连接 ,都必须设置成一样 utf8 gbk
+
+
+第二层因素
+	操作系统语言环境的设置
+			a)操作系统的总体的语言环境
+				[mysql01@localhost ~]$ cat /etc/sysconfig/i18n 
+							LANG="zh_CN.UTF-8"
+							[mysql01@localhost ~]$ 
+			b)当前用户的语言环境  linux的操作系统是基于多用户的操作系统
+							OLDPWD=/home/mysql01
+							[mysql01@localhost ~]$ env | grep LANG*
+							LANG=zh_CN.UTF-8
+							[mysql01@localhost ~]$ 
+							
+					=====>当前用户的LANG设置能屏蔽操作系统语言环境设置					
+							
+			实现:修改当前用户的语言环境 
+						[mysql01@localhost ~]$ env | grep LANG
+						LANG=C
+						[mysql01@localhost ~]$ 				
+						
+				insert into worker(id,name,sex,birthday,salary,entry_date,resume) values(3,'赵六六',0,'1985-09-21',7000,'2012-08-24','一个小牛');		
+						
+	
+第三层因素
+	你的应用软件的本身 文件的 存储问题....
+	
+	文件存储
+		最常用有2种方式: utf8  code936  
+		
+		
+		====  gbk转宽字节的函数....wide winskd函数  gbk转成宽字节(Unicode 2)
+	
+		
+
+//备份mysql数据库
+$ mysqldump -uroot -p mydb2 >  2.sql
+
+//恢复msql数据库
+$ mysqldump -uroot -p mydb2 < 2.sql
+
